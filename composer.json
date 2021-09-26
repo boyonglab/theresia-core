@@ -9,6 +9,8 @@
             "email": "boyonglab34@gmail.com"
         }
     ],
+	"prefer-stable": true,
+    "minimum-stability": "dev",
     "require": {
         "php": ">=8.0"
     },
