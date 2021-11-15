@@ -19,13 +19,27 @@ class Request {
     }
 
     public function getPath(): string
-    {
-        return $_SERVER['PATH_INFO'] ?? '/';
+    {   $uri = $_SERVER['REQUEST_URI'];
+        $params = explode('?', $uri);
+        return $params[0] == '/' ? $params[0] : rtrim($params[0], '/');
     }
 
-    public function getQuery(): string
+    public function getQuery($key = null): string | array
     {
-        return $_SERVER['QUERY_STRING'] ?? '';
+        $params = [];
+        $queryString = $_SERVER['QUERY_STRING'];
+        $items = explode('&', $queryString);
+
+        foreach($items as $item) {
+          $pair = explode('=', $item);
+          $params[$pair[0]] = $pair[1];
+        }
+
+        if (!$key) {
+          return $params;
+        }
+
+        return $params[$key] ?? '';
     }
 
     public function getMethod(): string

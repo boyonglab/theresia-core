@@ -8,9 +8,8 @@ final class RequestTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        $_SERVER['REQUEST_URI'] = '/';
-        $_SERVER['QUERY_STRING'] = 'token=123';
-        $_SERVER['PATH_INFO'] = null;
+        $_SERVER['REQUEST_URI'] = '/test-link?token=fgfd4543sdsdf#prodocts';
+        $_SERVER['QUERY_STRING'] = 'token=fgfd4543sdsdf';
         $_SERVER['REQUEST_METHOD'] = 'GET';
         self::$request = new Request();
     }
@@ -22,13 +21,13 @@ final class RequestTest extends TestCase
 
     public function testGetPath(): void
     {
-        $this->assertNotEquals($_SERVER['PATH_INFO'], self::$request->getPath());
-        $this->assertEquals('/', self::$request->getPath());
+        $this->assertEquals('/test-link', self::$request->getPath());
     }
 
     public function testGetQuery(): void
     {
-        $this->assertEquals($_SERVER['QUERY_STRING'], self::$request->getQuery());
+        $this->assertEquals(['token' => 'fgfd4543sdsdf'], self::$request->getQuery());
+        $this->assertEquals('fgfd4543sdsdf', self::$request->getQuery('token'));
     }
 
     public function testGetMethod(): void
@@ -43,7 +42,6 @@ final class RequestTest extends TestCase
          unset(self::$request);
          unset($_SERVER['REQUEST_URI']);
          unset($_SERVER['QUERY_STRING']);
-         unset($_SERVER['PATH_INFO']);
          unset($_SERVER['REQUEST_METHOD']);
     }
 
