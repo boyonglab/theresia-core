@@ -79,8 +79,7 @@ class Request {
 
     public function getHeaders(): array|false
     {
-        print_r($this->getUrl());
-       return getallheaders(); //get_headers($this->getUrl());
+       return getallheaders();
     }
     
     public function getJson(): array

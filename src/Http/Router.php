@@ -124,7 +124,8 @@ class Router
               }
           }
 
-          //print_r($result);
+          $display = null;
+		  
           if (count($result) > 0) {
             $args = $result['output'];
             unset($args[0]);
@@ -132,7 +133,7 @@ class Router
           } else {
             throw new \Exception('404');
           }
-
+          
 
         }
     }

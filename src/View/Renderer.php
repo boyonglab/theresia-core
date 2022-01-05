@@ -7,7 +7,7 @@ class Renderer implements IRenderer {
     public function html($temp, $params=[])
     {
 
-        $filename = BASE_PATH . '/view/' . $temp . '.php';
+        $filename = BASE_PATH . '/views/' . $temp . '.php';
         if (file_exists($filename)) {
             extract($params);
             ob_start();
