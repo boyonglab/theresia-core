@@ -5,7 +5,7 @@ class Request {
 
     public function __construct()
     {
-
+       
     }
 
     public function getHost(): string
@@ -27,12 +27,12 @@ class Request {
     public function getQuery($key = null): string | array
     {
         $params = [];
-        $queryString = $_SERVER['QUERY_STRING'];
+        $queryString = $_SERVER['QUERY_STRING'] ?? '';
         $items = explode('&', $queryString);
 
         foreach($items as $item) {
           $pair = explode('=', $item);
-          $params[$pair[0]] = $pair[1];
+          $params[$pair[0]] = $pair[1] ?? '';
         }
 
         if (!$key) {
@@ -75,6 +75,27 @@ class Request {
     public function getServerName(): string
     {
        return $_SERVER['SERVER_NAME'];
+    }
+
+    public function getHeaders(): array|false
+    {
+        print_r($this->getUrl());
+       return getallheaders(); //get_headers($this->getUrl());
+    }
+    
+    public function getJson(): array
+    {
+        return json_decode(file_get_contents('php://input'), true) ?? [];
+    }
+
+    public function getPost(): array
+    {
+        return $_POST;
+    }
+
+    public function getUrl(): string
+    {
+        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
     }
 
 }

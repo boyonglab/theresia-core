@@ -67,6 +67,15 @@ class Router
     {
         $this->routes[$uri] = $fn;
     }
+
+    /**
+     * Check if  $routes array has method.
+     * @return boolean
+     */
+    public function hasMethod() : bool
+    {
+       return  array_key_exists($this->request->getMethod(), $this->routes);
+    }
 /*
     public function get(string $uri, \Closure $fn) : void
     {
@@ -78,11 +87,13 @@ class Router
      * routes array.
      *
      * @param  string  $uri
-     * @return boolean
+     * @return bool
      */
     public function hasRoute(string $uri) : bool
     {
-        return array_key_exists($uri, $this->routes[$this->request->getMethod()]);
+       return  $this->hasMethod() ? 
+              array_key_exists($uri, $this->routes[$this->request->getMethod()]) :
+              false;
     }
 
     /**
@@ -91,7 +102,11 @@ class Router
      * @return mixed
      */
     public function run()
-    {
+    {   
+        if(!$this->hasMethod()) {
+            throw new \Exception('404');
+        }
+
         if($this->hasRoute($this->request->getPath())) {
             $this->routes[$this->request->getMethod()][$this->request->getPath()]->call($this);
         } else {
