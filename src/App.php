@@ -18,7 +18,7 @@ class App {
      $this->service = new Container();
      $this->service['request'] = new Request();
      $this->service['response'] = new Response();
-     $this->service['router'] = new Router($service['request']);
+     $this->service['router'] = new Router($this->service['request']);
      $this->service['renderer'] = new Renderer();
      $this->service['config'] = new Config();
   }
